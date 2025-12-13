@@ -1,4 +1,4 @@
-from SmartApi.smartWebSocket import SmartWebSocket
+from SmartApi.smartWebSocketV1 import SmartWebSocket
 
 print("Imported OK")
 
