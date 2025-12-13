@@ -1,0 +1,17 @@
+angel one api
+07/12/2025(sun)
+
+API key = TUnreERc  
+
+secret key = da2787a7-47f0-4a52-9461-40773fe72141 
+
+TOTP_SECRET= FU33K44BL2PHQTFUQ4WBPBXB6U   (ye milta h AngelAPI me )
+
+otpauth://totp/S1520958?secret=FU33K44BL2PHQTFUQ4WBPBXB6U&issuer=angelone.in&algorithm=SHA1&digits=6&period=30
+
+
+API_KEY = "TUnreERc"
+CLIENT_CODE = "S1520958"
+MPIN = "1709"
+TOTP_SECRET = "FU33K44BL2PHQTFUQ4WBPBXB6U======"
+'feedToken': 'eyJhbGciOiJIUzUxMiJ9....'
