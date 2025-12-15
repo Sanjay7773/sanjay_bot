@@ -1,20 +1,14 @@
 # ------------------------------------------------------------
-# websocket_v1.py  (FINAL STABLE)
-# Sends real-time ticks to bot_core.bot
+# websocket_v1.py  (FINAL STABLE - ANGEL V1)
 # ------------------------------------------------------------
 
 from SmartApi import SmartConnect
 from SmartApi.smartApiWebsocket import SmartWebSocket
-
-# from SmartApi.smartWebSocketV1 import SmartWebSocket
-#from SmartApi.smartWebsocket import SmartWebSocket
-# from SmartApi.webSocket import WebSocket
-
-
-
 import pyotp, json
-from bot_core import bot   # <-- GLOBAL BOT IMPORT
+
+from bot_core import bot
 from token_helper import get_latest_future_token
+
 # ------------------------------------------------------------
 # LOGIN DETAILS
 # ------------------------------------------------------------
@@ -24,10 +18,8 @@ CLIENT_CODE = "S1520958"
 MPIN = "1709"
 TOTP_SECRET = "FU33K44BL2PHQTFUQ4WBPBXB6U======"
 
-# Generate fresh 6-digit TOTP
 totp = pyotp.TOTP(TOTP_SECRET).now()
 
-# Login
 obj = SmartConnect(api_key=API_KEY)
 session = obj.generateSession(CLIENT_CODE, MPIN, totp)
 
@@ -37,50 +29,43 @@ client_code = session["data"]["clientcode"]
 print("🔥 LOGIN SUCCESS — WebSocket V1")
 print("Feed Token:", feed_token)
 
-
 # ------------------------------------------------------------
 # CALLBACKS
 # ------------------------------------------------------------
 
 def on_message(ws, message):
-    """Angel V1 WS sends JSON string → convert → send to bot"""
     try:
         tick = json.loads(message)
         bot.on_ws_tick(tick)
-        print("🔥 TICK → BOT:", tick)
+        print("🔥 TICK:", tick)
     except Exception as e:
         print("Parse Error:", e)
 
-
 def on_open(ws):
-    print("🟢 WS Connected — Subscribing FUTURE tick...")
+    print("🟢 WS Connected")
 
-    fut_token = get_latest_future_token(obj)   # auto latest future token
+    fut_token = get_latest_future_token(obj)
 
     ws.subscribe([
         {
-            "exchangeType": 2,   # 2 = NFO
-            "tokens": [ int(fut_token) ]
+            "exchangeType": 2,   # NFO
+            "tokens": [int(fut_token)]
         }
     ])
 
-    print(f"📡 Subscribed → NFO | {fut_token} (NIFTY FUT AUTO)")
-
-    
+    print(f"📡 Subscribed FUTURE → {fut_token}")
 
 def on_error(ws, error):
-    print("⚠️ ERROR:", error)
-
+    print("⚠️ WS ERROR:", error)
 
 def on_close(ws):
     print("🔴 WS CLOSED")
 
-
 # ------------------------------------------------------------
-# INITIALIZE SOCKET
+# SOCKET INIT  (⚠️ YAHI MAIN FIX HAI)
 # ------------------------------------------------------------
 
-ws = WebSocket(
+ws = SmartWebSocket(
     api_key=API_KEY,
     client_code=client_code,
     feed_token=feed_token
@@ -91,9 +76,5 @@ ws.on_message = on_message
 ws.on_error = on_error
 ws.on_close = on_close
 
-
-# ------------------------------------------------------------
-# CONNECT
-# ------------------------------------------------------------
 print("⏳ Connecting WebSocket V1...")
 ws.connect()
