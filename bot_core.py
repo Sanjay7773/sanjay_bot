@@ -7,7 +7,9 @@ from pyotp import TOTP
 
 from datetime import datetime
 from typing import Dict, Optional, Literal
-
+import json
+from SmartApi.smartApiWebsocket import SmartWebSocket
+from token_helper import get_latest_future_token
 # 🔹 Angel One SmartAPI
 from SmartApi.smartConnect import SmartConnect
 
@@ -219,7 +221,7 @@ def on_message(ws, message):
 def on_open(ws):
     print("🟢 WebSocket Connected")
 
-    from token_helper import get_latest_future_token
+    
     fut_token = get_latest_future_token(api_client)
 
     ws.subscribe([
