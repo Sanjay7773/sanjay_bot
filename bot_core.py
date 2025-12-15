@@ -250,3 +250,29 @@ ws.on_close = on_close
 print("⏳ Connecting WebSocket...")
 ws.connect()
 
+# ------------------------------------------------------------
+# STEP 10 — LIVE MARKET LOOP (NO WEBSOCKET)
+# ------------------------------------------------------------
+import time
+
+print("🚀 STARTING LIVE MARKET LOOP (LTP MODE)")
+
+while True:
+    try:
+        ltp_data = api_client.ltpData(
+            exchange="NSE",
+            tradingsymbol="NIFTY",
+            symboltoken="26000"   # NIFTY INDEX TOKEN
+        )
+
+        tick = {
+            "last_traded_price": float(ltp_data["data"]["ltp"])
+        }
+
+        bot.on_ws_tick(tick)
+
+        time.sleep(1)  # 1 second tick
+
+    except Exception as e:
+        print("❌ LTP Error:", e)
+        time.sleep(2)
