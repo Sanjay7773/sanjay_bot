@@ -4,7 +4,9 @@
 # ------------------------------------------------------------
 
 from SmartApi import SmartConnect
-from SmartApi.smartWebSocketV1 import SmartWebSocket
+# from SmartApi.smartWebSocketV1 import SmartWebSocket
+from SmartApi.smartWebSocket import SmartWebSocket
+
 
 import pyotp, json
 from bot_core import bot   # <-- GLOBAL BOT IMPORT
