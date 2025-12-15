@@ -201,17 +201,16 @@ print("[BOT] Ready. Waiting for ticks...")
 
 
 # ------------------------------------------------------------
-# STEP 9 — WEBSOCKET (ACTUAL WORKING WITH YOUR LIB)
+# ------------------------------------------------------------
+# STEP 9 — WEBSOCKET (ACTUAL WORKING WITH INSTALLED LIBRARY)
 # ------------------------------------------------------------
 
 import json
 from SmartApi.smartApiWebsocket import SmartWebSocket
 from token_helper import get_latest_future_token
 
-# ✅ CORRECT attribute name
 feed_token = api_client.feed_token
 client_code = USERNAME
-
 
 def on_message(ws, message):
     try:
@@ -219,33 +218,28 @@ def on_message(ws, message):
         bot.on_ws_tick(tick)
         print("📈 TICK:", tick)
     except Exception as e:
-        print("❌ Tick parse error:", e)
-
+        print("Tick parse error:", e)
 
 def on_open(ws):
     print("🟢 WebSocket Connected")
+    from token_helper import get_latest_future_token
 
     fut_token = get_latest_future_token(api_client)
-
+    
     ws.subscribe([
         {
-            "exchangeType": 2,   # NFO
+            "exchangeType": 2,
             "tokens": [str(fut_token)]
         }
     ])
+    print("📡 Subscribed FUT:", fut_token)
 
-    print("📡 Subscribed FUT token:", fut_token)
-
-
-def on_error(ws, error):
+def on_error(error):
     print("❌ WS Error:", error)
 
-
-def on_close(ws):
+def on_close():
     print("🔴 WS Closed")
 
-
-# ✅ CORRECT constructor (NO api_key HERE)
 ws = SmartWebSocket(feed_token, client_code)
 
 ws.on_open = on_open
