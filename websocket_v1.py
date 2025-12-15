@@ -65,10 +65,14 @@ def on_close(ws):
 # SOCKET INIT  (⚠️ YAHI MAIN FIX HAI)
 # ------------------------------------------------------------
 
+# ws = SmartWebSocket(
+#     api_key=API_KEY,
+#     client_code=client_code,
+#     feed_token=feed_token
+# )
 ws = SmartWebSocket(
-    api_key=API_KEY,
-    client_code=client_code,
-    feed_token=feed_token
+    client_code,
+    feed_token
 )
 
 ws.on_open = on_open
