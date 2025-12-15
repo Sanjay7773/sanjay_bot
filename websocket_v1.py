@@ -5,7 +5,7 @@
 
 from SmartApi import SmartConnect
 # from SmartApi.smartWebSocketV1 import SmartWebSocket
-from SmartApi.smartWebSocket import SmartWebSocket
+from SmartApi.smartWebsocket import SmartWebSocket
 
 
 import pyotp, json

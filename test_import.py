@@ -1,5 +1,6 @@
 # from SmartApi.smartWebSocketV1 import SmartWebSocket
-from SmartApi.smartWebSocket import SmartWebSocket
+from SmartApi.smartWebsocket import SmartWebSocket
+
 
 print("Imported OK")
 
