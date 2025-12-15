@@ -78,7 +78,7 @@ def on_close(ws):
 # INITIALIZE SOCKET
 # ------------------------------------------------------------
 
-ws = SmartWebSocket(
+ws = WebSocket(
     api_key=API_KEY,
     client_code=client_code,
     feed_token=feed_token
