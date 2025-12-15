@@ -15,3 +15,9 @@ CLIENT_CODE = "S1520958"
 MPIN = "1709"
 TOTP_SECRET = "FU33K44BL2PHQTFUQ4WBPBXB6U======"
 'feedToken': 'eyJhbGciOiJIUzUxMiJ9....'
+
+
+
+mstock  ;>
+
+f"&ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...."
