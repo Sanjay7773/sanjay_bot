@@ -198,3 +198,54 @@ bot = NiftyOptionBot(api=api_client, config=bot_config)
 
 
 print("[BOT] Ready. Waiting for ticks...")
+
+
+# ------------------------------------------------------------
+# STEP 9 — WEBSOCKET (STABLE, ACTUAL VERSION)
+# ------------------------------------------------------------
+
+feed_token = api_client.feedToken
+client_code = USERNAME
+
+def on_message(ws, message):
+    try:
+        tick = json.loads(message)
+        bot.on_ws_tick(tick)
+        print("📈 TICK:", tick)
+    except Exception as e:
+        print("Tick parse error:", e)
+
+def on_open(ws):
+    print("🟢 WebSocket Connected")
+
+    from token_helper import get_latest_future_token
+    fut_token = get_latest_future_token(api_client)
+
+    ws.subscribe([
+        {
+            "exchangeType": 2,   # NFO
+            "tokens": [str(fut_token)]
+        }
+    ])
+
+    print("📡 Subscribed FUT:", fut_token)
+
+def on_error(ws, error):
+    print("❌ WS Error:", error)
+
+def on_close(ws):
+    print("🔴 WS Closed")
+
+
+ws = SmartWebSocket(
+    feed_token,
+    client_code
+)
+
+ws.on_open = on_open
+ws.on_message = on_message
+ws.on_error = on_error
+ws.on_close = on_close
+
+print("⏳ Connecting WebSocket...")
+ws.connect()
